@@ -1,0 +1,11 @@
+{
+    "name": "alishertaubaldy/src",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Routes\\": "routes/",
+            "Database\\": "database/"
+        }
+    },
+    "require": {}
+}
