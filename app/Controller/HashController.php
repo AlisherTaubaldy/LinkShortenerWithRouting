@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace app\Controller;
 
 use App\Models\Redirect;
 class HashController
