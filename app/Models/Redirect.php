@@ -3,7 +3,6 @@
 namespace app\Models;
 
 use Database\Model;
-use Database\DataBase;
 
 class Redirect extends Model
 {

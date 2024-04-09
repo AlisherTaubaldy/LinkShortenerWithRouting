@@ -1,10 +1,9 @@
 <?php
 
-namespace Database;
+namespace database;
 
-use Database\DataBase;
 use PDO;
-use PDOException;
+use Database\DataBase;
 
 class Model
 {
@@ -17,6 +16,10 @@ class Model
     {
         $db = new DataBase();
         $this->dbConn = $db->dbConnect();
+    }
+
+    public function hello(){
+        echo "hello";
     }
 
     public function create($data):bool

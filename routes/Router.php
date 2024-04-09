@@ -9,14 +9,14 @@ class Router
     private const string METHOD_GET = 'GET';
     private const string METHOD_POST = 'POST';
 
-    public function get(string $path, $className, $funcName): void
+    public function get(string $path, $className, $funcName, $page): void
     {
-        $this->addHandler(self::METHOD_GET, $path, $className, $funcName);
+        $this->addHandler(self::METHOD_GET, $path, $className, $funcName, $page);
     }
 
-    public function post(string $path, $className, $funcName): void
+    public function post(string $path, $className, $funcName, $page): void
     {
-        $this->addHandler(self::METHOD_POST, $path, $className, $funcName);
+        $this->addHandler(self::METHOD_POST, $path, $className, $funcName, $page);
     }
 
     public function run(){
@@ -26,12 +26,12 @@ class Router
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
         $callback = null;
+        $args = null;
 
         foreach ( $this->handlers as $handler){
             if ($handler['path'] === $requestPath && $requestMethod === $handler['method']){
                 $className = new $handler['className'];
-
-
+                $args = [$handler['page']];
 
                 $callback = [$className, $handler['funcName']];
             }
@@ -48,9 +48,7 @@ class Router
             }
         }
 
-        call_user_func_array($callback , [
-            array_merge($_GET, $_POST)
-        ]);
+        call_user_func_array($callback , $args);
     }
 
     public function addNotFoundHandler($className, $funcName): void
@@ -59,12 +57,13 @@ class Router
         $this->notFound["funcName"] = $funcName;
     }
 
-    public function addHandler(string $method,string $path, $className, $funcName){
+    public function addHandler(string $method, string $path, $className, $funcName, $page){
         $this->handlers[$method . $path] = [
             'path' => $path,
             'method' => $method,
             'className' => $className,
-            'funcName' => $funcName
+            'funcName' => $funcName,
+            'page' => $page
         ];
     }
 
